@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar -->
+  <div id="sidebar" class="fixed inset-y-0 left-0 z-30 w-64 bg-gray-800 shadow-md transform -translate-x-full transition-transform duration-300 md:translate-x-0 md:relative md:shadow-none">
+    <div class="p-4 border-b border-gray-700">
+      <h2 class="text-2xl font-bold text-blue-400">Admin Panel</h2>
+    </div>
+    <ul class="p-4 space-y-2">
+      <li><button onclick="showSection('attendance')" class="w-full text-left px-4 py-2 hover:bg-gray-700 rounded">📊 Attendance</button></li>
+      <li><button onclick="showSection('employees')" class="w-full text-left px-4 py-2 hover:bg-gray-700 rounded">👥 Employees</button></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col overflow-y-auto relative">
+    <!-- Header -->
+    <header class="flex items-center justify-between px-4 py-2 bg-gray-800 shadow md:hidden">
+      <button onclick="toggleSidebar()" class="text-blue-400 text-2xl">☰</button>
+      <h1 class="text-lg font-bold">Attendance Dashboard</h1>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1 p-6 space-y-6">
+      <!-- Attendance Section -->
+      <section id="attendanceSection" class="">
+        <h2 class="text-2xl font-semibold mb-4">Take Attendance</h2>
+        <div class="flex space-x-2 mb-4">
+          <input type="date" id="attendanceDate" class="bg-gray-700 text-gray-100 border border-gray-600 rounded px-3 py-2">
+          <input type="text" id="attendanceDescription" placeholder="Description (optional)" class="bg-gray-700 text-gray-100 border border-gray-600 rounded px-3 py-2 flex-1">
+          <button onclick="startSession()" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded">Start</button>
+        </div>
+
+        <div id="employeeList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+
+        <div class="mt-6 space-x-2">
+          <button onclick="downloadExcel()" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded">Download Excel</button>
+          <button onclick="downloadPDF()" class="bg-red-600 hover:bg-red-500 px-4 py-2 rounded">Download PDF</button>
+        </div>
+      </section>
+
+      <!-- Employees Section -->
+      <section id="employeesSection" class="hidden">
+        <h2 class="text-2xl font-semibold mb-4">Manage Employees</h2>
+        <div class="flex flex-col md:flex-row md:space-x-2 mb-4">
+          <input type="text" id="employeeName" placeholder="Employee Name" class="bg-gray-700 text-gray-100 border border-gray-600 rounded px-3 py-2 mb-2 md:mb-0">
+          <input type="text" id="employeePhone" placeholder="Phone Number" class="bg-gray-700 text-gray-100 border border-gray-600 rounded px-3 py-2 mb-2 md:mb-0">
+          <button onclick="addEmployee()" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded">Add Employee</button>
+        </div>
+        <input type="file" onchange="bulkUpload(event)" class="mb-4 text-gray-100">
+        <ul id="employeeListManage" class="space-y-1"></ul>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
